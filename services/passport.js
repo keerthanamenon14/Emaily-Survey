@@ -19,17 +19,14 @@ passport.deserializeUser((id, done) => { //turning an user id in to a mongoose m
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
-    callbackURL: 'https://emaily-survey.onrender.com/'
+    callbackURL: '/auth/google/callback',
+    proxy: true
   },
-  (accessToken, refreshToken, profile, done) => {
-    console.log(accessToken)
-    console.log(refreshToken)
-    console.log(profile)
-    User.findOne({googleID: profile.id}).then((existingUser) => {
-        if(existingUser) {
-            done(null, existingUser);
-        } else {
-            new User({ googleID: profile.id }).save().then(user => done(null, user));
-        }
-    });
+  async (accessToken, refreshToken, profile, done) => {
+    const existingUser = await User.findOne({googleID: profile.id});
+    if(existingUser) {
+        return done(null, existingUser);
+    } 
+    const user = await new User({ googleID: profile.id }).save();
+    done(null, user);
 }));

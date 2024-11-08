@@ -5,7 +5,12 @@ app.get('/auth/google', passport.authenticate('google',{
     scope: ['profile', 'email']
 }));
   
-app.get('/auth/google/callback', passport.authenticate('google')); //although the /auth/google route performs the same here it gets the code in call back and server recognizes that the user is not making the request for the first time
+app.get('/auth/google/callback', 
+    passport.authenticate('google'),
+    (req, res) => {
+        res.redirect('/surveys');
+    } 
+); //although the /auth/google route performs the same here it gets the code in call back and server recognizes that the user is not making the request for the first time
 
 app.get('/api/current_user', (req, res) => {
     res.send(req.user);
@@ -13,7 +18,7 @@ app.get('/api/current_user', (req, res) => {
 
 app.get('/api/logout', (req, res) => {
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
 });
 
 };
