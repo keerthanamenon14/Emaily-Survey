@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: emaily
+    env: node
+    plan: free
+    buildCommand: npm install && npm run heroku-postbuild
+    startCommand: npm run dev
