@@ -7,6 +7,7 @@ module.exports = {
     cookieKey: process.env.COOKIE_KEY, //random made string
     stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-    stripeSecretKey: process.env.SEND_GRID_KEY
+    stripeSecretKey: process.env.SEND_GRID_KEY,
+    redirectDomain: process.env.redirectDomain
 }
 

@@ -10,3 +10,9 @@ export const handleToken = (token) => async dispatch => {
     const res = await axios.post('/api/stripe', token);
     dispatch({ type: FETCH_USER, payload: res.data});  //becase it returns the exact same user model as above
 }
+
+export const submitSurvey = (values, history) => async dispatch => {
+    const res = await axios.post('/api/surveys', values);
+    history.push('/surveys');
+    dispatch({type: FETCH_USER, payload: res.data});
+}
